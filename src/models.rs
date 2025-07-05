@@ -31,9 +31,9 @@ impl DungeonRun {
     }
 
     pub fn add_player(&mut self, guid: String, name: Option<String>) {
-        self.players
-            .entry(guid)
-            .or_insert_with(|| name.unwrap_or("Unknown".into()));
+        if !(name.is_none() && self.players.contains_key(&guid)) {
+            self.players.insert(guid, name.unwrap_or("Unknown".into()));
+        }
     }
 
     pub fn set_end_time(&mut self, ts: String) {
