@@ -19,7 +19,6 @@ pub fn run(path: &str) {
 
         match event {
 
-            // TODO: Get TIME, not just Day
             LogEvent::DungeonStart { name, timestamp } => {
                 if let Some(prev) = current_dungeon.take() {
                     all_dungeons.push(prev);
@@ -51,7 +50,6 @@ pub fn run(path: &str) {
                 }
             }
 
-            // TODO: Get TIME, not just Day
             LogEvent::DungeonEnd { timestamp } => {
                 if let Some(d) = current_dungeon.as_mut() {
                     d.set_end_time(timestamp);
@@ -70,11 +68,11 @@ pub fn run(path: &str) {
     println!("\n{}", "Final Dungeon Reports:".bold());
     for (i, dungeon) in all_dungeons.iter().enumerate() {
         println!(
-            "\n{} {} [{} - {:?}]",
+            "\n{} {} [{} - {}]",
             format!("Dungeon #{}:", i + 1).bold(),
             dungeon.name.green(),
-            dungeon.start_time,
-            dungeon.end_time
+            dungeon.start_time.time().format("%H:%M").to_string(),
+            dungeon.end_time.unwrap().time().format("%H:%M").to_string()
         );
 
         // Only show the actual dungeon participants

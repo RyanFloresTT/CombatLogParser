@@ -1,9 +1,10 @@
 use std::collections::HashMap;
+use chrono::DateTime;
 
 #[derive(Debug)]
 pub enum LogEvent {
-    DungeonStart { name: String, timestamp: String },
-    DungeonEnd { timestamp: String },
+    DungeonStart { name: String, timestamp: DateTime<chrono::Utc> },
+    DungeonEnd { timestamp: DateTime<chrono::Utc> },
     CombatantInfo { guid: String },
     GuidToName { guid: String, name: String },
     SpellDamage { guid: String, amount: u64 },
@@ -13,14 +14,14 @@ pub enum LogEvent {
 #[derive(Debug)]
 pub struct DungeonRun {
     pub name: String,
-    pub start_time: String,
-    pub end_time: Option<String>,
+    pub start_time: DateTime<chrono::Utc>,
+    pub end_time: Option<DateTime<chrono::Utc>>,
     pub players: HashMap<String, String>,     // GUID -> name
     pub damage_by_guid: HashMap<String, u64>, // GUID -> total damage
 }
 
 impl DungeonRun {
-    pub fn new(name: String, start_time: String) -> Self {
+    pub fn new(name: String, start_time: DateTime<chrono::Utc>) -> Self {
         Self {
             name,
             start_time,
@@ -36,7 +37,7 @@ impl DungeonRun {
         }
     }
 
-    pub fn set_end_time(&mut self, ts: String) {
+    pub fn set_end_time(&mut self, ts: DateTime<chrono::Utc>) {
         self.end_time = Some(ts);
     }
 
