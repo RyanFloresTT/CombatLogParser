@@ -2,12 +2,6 @@ use crate::models::LogEvent;
 use crate::util::extract_timestamp;
 use lazy_static::lazy_static;
 use regex::Regex;
-/* TODO:
-   1. Keep track of current dungeon
-   2. Parse the first 5 player ID's and match them to their names
-   3. Total the damage and healing for each player for each dungeon
-   4. Stop reading lines when a dungeon has ended, repeat once a new dungeon is found
-*/
 
 lazy_static! {
     static ref DUNGEON_RE: Regex = Regex::new(r#"CHALLENGE_MODE_START,"([^"]+)""#).unwrap();
