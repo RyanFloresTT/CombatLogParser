@@ -1,17 +1,18 @@
-﻿use crate::models::LogEvent;
+use crate::models::LogEvent;
 use regex::Regex;
 
 /* TODO:
-    1. Keep track of current dungeon
-    2. Parse the first 5 player ID's and match them to their names
-    3. Total the damage and healing for each player for each dungeon
-    4. Stop reading lines when a dungeon has ended, repeat once a new dungeon is found
- */
+   1. Keep track of current dungeon
+   2. Parse the first 5 player ID's and match them to their names
+   3. Total the damage and healing for each player for each dungeon
+   4. Stop reading lines when a dungeon has ended, repeat once a new dungeon is found
+*/
 pub fn parse_line(line: &str) -> LogEvent {
     let dungeon_re = Regex::new(r#"CHALLENGE_MODE_START,"([^"]+)""#).unwrap();
     let combatant_re = Regex::new(r#"COMBATANT_INFO,(Player-[^,]+)"#).unwrap();
     let guid_name_re = Regex::new(r#"(Player-[^,]+),"([^"]+)""#).unwrap();
-    let damage_re = Regex::new(r#"SPELL_DAMAGE,.*,(Player-[^,]+),[^,]*,[^,]*,[^,]*,(\d+),"#).unwrap();
+    let damage_re =
+        Regex::new(r#"SPELL_DAMAGE,.*,(Player-[^,]+),[^,]*,[^,]*,[^,]*,(\d+),"#).unwrap();
     let dungeon_end_re = Regex::new(r#"CHALLENGE_MODE_END"#).unwrap();
 
     if let Some(cap) = dungeon_re.captures(line) {

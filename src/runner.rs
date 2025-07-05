@@ -1,6 +1,6 @@
-﻿use crate::models::DungeonRun;
-use crate::parser::parse_line;
+use crate::models::DungeonRun;
 use crate::models::LogEvent;
+use crate::parser::parse_line;
 
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -56,9 +56,17 @@ pub fn run(path: &str) {
     }
 
     for dungeon in all_dungeons {
-        println!("Dungeon: {} [{} - {:?}]", dungeon.name, dungeon.start_time, dungeon.end_time);
+        println!(
+            "Dungeon: {} [{} - {:?}]",
+            dungeon.name, dungeon.start_time, dungeon.end_time
+        );
         for (guid, name) in &dungeon.players {
-            println!(" - {}: {} did {} damage.", guid, name, dungeon.damage_by_guid.get(guid).unwrap_or(&0));
+            println!(
+                " - {}: {} did {} damage.",
+                guid,
+                name,
+                dungeon.damage_by_guid.get(guid).unwrap_or(&0)
+            );
         }
     }
 }
